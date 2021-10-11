@@ -1,3 +1,9 @@
+"""
+Cria uma matriz representando os pontos de um quadrado,
+e utiliza a matriz de rotação para fazer a figura realizar
+um movimento de translação em volta da origem.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
