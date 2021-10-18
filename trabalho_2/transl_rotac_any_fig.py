@@ -84,7 +84,6 @@ while not cb.end_loop:
             aumenta = False
         if(cx <= cb.escala_lim_inf):
             aumenta = True
-        print(cb.escala_lim_inf)
 
 
 
