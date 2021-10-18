@@ -4,15 +4,15 @@ import matrizes as mt
 import callback as cb
 
 # Hexagono
-hx = np.array([[2,1,1],
-                [1,2,1],
-                [2,3,1],
-                [3,3,1],
-                [4,2,1],
-                [3,1,1]])
+# #hx = np.array([[2,1,1],
+#                 [1,2,1],
+#                 [2,3,1],
+#                 [3,3,1],
+#                 [4,2,1],
+#                 [3,1,1]])
 
 # Triângulo
-#hx = np.array([[2,2,1], [4,2,1], [3,4,1]])
+# hx = np.array([[2,2,1], [4,2,1], [3,4,1]])
 
 # Quadrado
 hx = np.array([[1,1,1], [1,2,1], [2,2,1], [2,1,1]])
@@ -42,25 +42,30 @@ cy = 1.0
 aumenta = True
 cb.end_loop = False
 
+cb.velocidade_rotacao = 1.0
+cb.velocidade_translacao = 1.0
+
 while not cb.end_loop:
     for theta in range(0, 361, 5):
+        
+        cb.escala_lim_inf = cb.escala_lim_sup/2
         
         if cb.end_loop == True:
             break
         
-        theta_rad = (theta/180)*np.pi
+        theta_1 = theta*cb.velocidade_rotacao
+        theta_2 = theta*cb.velocidade_translacao
         
-        tr_1 = np.matmul(mt.matriz_rotacao(theta_rad), mt.matriz_translacao_origem(xcentro, ycentro))
+        tr_1 = np.matmul(mt.matriz_rotacao(theta_1), mt.matriz_translacao_origem(xcentro, ycentro))
         tr_2 = np.matmul(mt.matriz_escala(cx, cy), tr_1)
         tr_3 = np.matmul(mt.matriz_translacao_volta(xcentro, ycentro), tr_2)    
         
         matriz_final = np.matmul(tr_3, po)
         
-        matriz_transl = np.matmul(mt.matriz_rotacao(theta_rad), matriz_final)
+        matriz_transl = np.matmul(mt.matriz_rotacao(theta_2), matriz_final)
         
         plt.clf()
         plt.xlim((-xmax*4, xmax*4)), plt.ylim((-ymax*4, ymax*4))
-       # plt.axhline(linewidth=1), plt.axvline(linewidth=1)
         xlist = np.append(matriz_transl[0, :], matriz_transl[0, 0])
         ylist = np.append(matriz_transl[1, :], matriz_transl[1, 0])
         plt.plot(xlist, ylist, '-r',)
@@ -69,16 +74,17 @@ while not cb.end_loop:
         plt.pause(0.001)
         
         if aumenta:
-            cx += 0.1
-            cy += 0.1
+            cx += 0.03
+            cy += 0.03
         else:
-            cx -= 0.1
-            cy -= 0.1
+            cx -= 0.03
+            cy -= 0.03
         
-        if(cx >= 2):
+        if(cx >= cb.escala_lim_sup):
             aumenta = False
-        if(cx <= 0.5):
+        if(cx <= cb.escala_lim_inf):
             aumenta = True
+        print(cb.escala_lim_inf)
 
 
 

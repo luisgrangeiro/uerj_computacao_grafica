@@ -1,6 +1,8 @@
 import numpy as np
 
-def matriz_rotacao(theta_rad):
+def matriz_rotacao(theta):
+    theta_rad = (theta/180)*np.pi
+    
     return np.array([[np.cos(theta_rad), -np.sin(theta_rad), 0],
                                [np.sin(theta_rad),  np.cos(theta_rad), 0],
                                [0, 0, 1]])
