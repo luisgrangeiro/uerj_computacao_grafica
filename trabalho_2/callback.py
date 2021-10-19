@@ -40,7 +40,7 @@ def on_key(event):
     elif event.key == 'down':
         velocidade_rotacao -= 0.5
     elif event.key == 'left':
-        velocidade_translacao += 0.05
+        velocidade_translacao += 0.5
     elif event.key == 'right':
-        velocidade_translacao -= 0.05
+        velocidade_translacao -= 0.5
     
